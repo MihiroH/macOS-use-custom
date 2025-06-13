@@ -31,7 +31,7 @@ macOS-use supports multiple LLM providers:
 
 ### Option 1: Claude Code CLI (Recommended - Subscription-based)
 Use Claude Code CLI to avoid pay-per-use API costs:
-- Install [Claude Code CLI](https://claude.ai/cli) globally
+- Install [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code/getting-started) globally
 - No API keys needed - uses your Claude subscription
 - Set `LLM_PROVIDER=claude-cli` in your `.env` file
 
