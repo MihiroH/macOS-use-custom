@@ -10,7 +10,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import argparse
 import asyncio
 
-from mlx_use import Agent
+from mlx_use import Agent, ClaudeCLI
 from pydantic import SecretStr
 from mlx_use.controller.service import Controller
 
@@ -18,29 +18,44 @@ from mlx_use.controller.service import Controller
 def set_llm(llm_provider:str = None):
 	if not llm_provider:
 		raise ValueError("No llm provider was set")
-	
+
+	if llm_provider == "claude-cli":
+		return ClaudeCLI()
+
 	if llm_provider == "OAI" and os.getenv('OPENAI_API_KEY'):
 		return ChatOpenAI(model='gpt-4', api_key=SecretStr(os.getenv('OPENAI_API_KEY')))
-	
+
 	if llm_provider == "google" and os.getenv('GEMINI_API_KEY'):
 		return ChatGoogleGenerativeAI(model='gemini-2.0-flash-exp', api_key=SecretStr(os.getenv('GEMINI_API_KEY')))
-	
+
 	if llm_provider == "anthropic" and os.getenv('ANTHROPIC_API_KEY'):
 		return ChatAnthropic(model='claude-3-sonnet-20240229', api_key=SecretStr(os.getenv('ANTHROPIC_API_KEY')))
-	
+
 	return None
 
-# Try to set LLM based on available API keys
+# Try to set LLM based on environment variable or available API keys
 llm = None
-if os.getenv('GEMINI_API_KEY'):
-	llm = set_llm('google')
-elif os.getenv('OPENAI_API_KEY'):
+llm_provider = os.getenv('LLM_PROVIDER', '').lower()
+
+if llm_provider == 'claude-cli':
+	llm = set_llm('claude-cli')
+elif llm_provider == 'oai' and os.getenv('OPENAI_API_KEY'):
 	llm = set_llm('OAI')
-elif os.getenv('ANTHROPIC_API_KEY'):
+elif llm_provider == 'google' and os.getenv('GEMINI_API_KEY'):
+	llm = set_llm('google')
+elif llm_provider == 'anthropic' and os.getenv('ANTHROPIC_API_KEY'):
 	llm = set_llm('anthropic')
+else:
+	# Fallback to auto-detection based on available API keys
+	if os.getenv('GEMINI_API_KEY'):
+		llm = set_llm('google')
+	elif os.getenv('OPENAI_API_KEY'):
+		llm = set_llm('OAI')
+	elif os.getenv('ANTHROPIC_API_KEY'):
+		llm = set_llm('anthropic')
 
 if not llm:
-	raise ValueError("No API keys found. Please set at least one of GEMINI_API_KEY, OPENAI_API_KEY, or ANTHROPIC_API_KEY in your .env file")
+	raise ValueError("No LLM provider configured. Please set LLM_PROVIDER=claude-cli in your .env file to use Claude CLI, or set at least one of GEMINI_API_KEY, OPENAI_API_KEY, or ANTHROPIC_API_KEY for API-based providers.")
 
 controller = Controller()
 
@@ -55,10 +70,10 @@ async def main():
 		max_actions_per_step=1,
 		max_failures=5
 	)
-  
+
 	await agent_greeting.run(max_steps=25)
 	task = input("Enter the task: ")
-  
+
 	agent_task = Agent(
 		task=task,
 		llm=llm,
@@ -67,7 +82,7 @@ async def main():
 		max_actions_per_step=4,
 		max_failures=5
 	)
-	
+
 	await agent_task.run(max_steps=25)
 
 

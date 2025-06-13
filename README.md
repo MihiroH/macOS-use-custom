@@ -37,7 +37,18 @@ Clone first
 git clone https://github.com/browser-use/macOS-use.git && cd macOS-use
 ```
 
-Don't forget API key <br>Supported providers: [OAI](https://platform.openai.com/docs/quickstart), [Anthropic](https://docs.anthropic.com/en/api/admin-api/apikeys/get-api-key) or [Gemini](https://ai.google.dev/gemini-api/docs/api-key) (deepseek R1 coming soon!)
+## LLM Provider Options
+
+macOS-use supports multiple LLM providers:
+
+### Option 1: Claude Code CLI (Recommended - Subscription-based)
+Use Claude Code CLI to avoid pay-per-use API costs:
+- Install [Claude Code CLI](https://claude.ai/cli) globally
+- No API keys needed - uses your Claude subscription
+- Set `LLM_PROVIDER=claude-cli` in your `.env` file
+
+### Option 2: API-based Providers (Pay-per-use)
+Supported providers: [OAI](https://platform.openai.com/docs/quickstart), [Anthropic](https://docs.anthropic.com/en/api/admin-api/apikeys/get-api-key) or [Gemini](https://ai.google.dev/gemini-api/docs/api-key) (deepseek R1 coming soon!)
 
 <br> At the moment, macOS-use works best with OAI or Anthropic API, although Gemini is free. While Gemini works great too, it is not as reliable.
 <br>
@@ -48,6 +59,23 @@ cp .env.example .env
 
 ```bash
 open ./.env
+```
+
+### Configuration
+
+Edit your `.env` file:
+
+**For Claude CLI (Recommended):**
+```bash
+LLM_PROVIDER=claude-cli
+```
+
+**For API-based providers:**
+```bash
+LLM_PROVIDER=oai  # or anthropic, google
+OPENAI_API_KEY=your_key_here
+# or ANTHROPIC_API_KEY=your_key_here
+# or GEMINI_API_KEY=your_key_here
 ```
 
 We recommend using macOS-use with uv environment

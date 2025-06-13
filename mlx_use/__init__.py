@@ -8,6 +8,7 @@ from mlx_use.agent.views import ActionModel as ActionModel
 from mlx_use.agent.views import ActionResult as ActionResult
 from mlx_use.agent.views import AgentHistoryList as AgentHistoryList
 from mlx_use.controller.service import Controller as Controller
+from mlx_use.llm.claude_cli import ClaudeCLI as ClaudeCLI
 
 __all__ = [
 	'Agent',
@@ -16,4 +17,5 @@ __all__ = [
 	'ActionResult',
 	'ActionModel',
 	'AgentHistoryList',
+	'ClaudeCLI',
 ]
