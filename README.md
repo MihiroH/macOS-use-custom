@@ -38,20 +38,19 @@ Use Claude Code CLI to avoid pay-per-use API costs:
 ### Option 2: API-based Providers (Pay-per-use)
 Supported providers: [OAI](https://platform.openai.com/docs/quickstart), [Anthropic](https://docs.anthropic.com/en/api/admin-api/apikeys/get-api-key) or [Gemini](https://ai.google.dev/gemini-api/docs/api-key) (deepseek R1 coming soon!)
 
-<br> At the moment, macOS-use works best with OAI or Anthropic API, although Gemini is free. While Gemini works great too, it is not as reliable.
-<br>
+At the moment, macOS-use works best with OAI or Anthropic API, although Gemini is free. While Gemini works great too, it is not as reliable.
 
+## Configuration
+
+First, copy the environment file:
 ```bash
 cp .env.example .env
 ```
 
+Then edit your `.env` file:
 ```bash
 open ./.env
 ```
-
-### Configuration
-
-Edit your `.env` file:
 
 **For Claude CLI (Recommended):**
 ```bash
@@ -66,22 +65,21 @@ OPENAI_API_KEY=your_key_here
 # or GEMINI_API_KEY=your_key_here
 ```
 
-We recommend using macOS-use with uv environment
-<br>
+## Installation
+
+We recommend using macOS-use with uv environment:
 
 ```bash
 brew install uv && uv venv && source .venv/bin/activate
 ```
 
-Install locally and you're good to go! Try the first example!
-<br>
+Install locally and you're good to go! Try the first example:
 
 ```bash
 uv pip install --editable . && python examples/try.py
-
 ```
 
-Try prompting it with
+Try prompting it with:
 
 ```bash
 open the calculator app
@@ -131,28 +129,7 @@ TLDR: Tell every Apple device what to do, and see it done. on EVERY APP.
 <br><br>
 This project aimes to build the AI agent for the MLX by Apple framework that would allow the agent to perform any action on any Apple device. Our final goal is a open source that anyone can clone, powered by the [mlx](https://github.com/ml-explore/mlx) and [mlx-vlm](https://github.com/Blaizzy/mlx-vlm) to run local private infrence at zero cost.
 
-## Roadmap goals:
 
-1. Support MacBooks at SOTA reliability
-
-- [ ] Refine the Agent prompting.
-- [ ] Release the first working version to pypi.
-- [ ] Improve self-correction.
-- [x] Adding ability to check which apps the machine has installed.
-- [x] Add feature to allow the agent to check existing apps if failing, e.g. calendar app actual name is iCal.
-- [ ] Add action for the agent to ask input from the user.
-- [ ] Test Test Test! and let us know what and how to improve!
-- [ ] Make task cheaper and more efficient.
-
-2. Support local inference with small fine tuned model.
-
-- [ ] Add support for inference with local models using mlx and mlx-vlm.
-- [ ] Fine tune a small model that every device can run inference with.
-- [ ] SOTA reliability.
-
-3. Support iPhone/iPad
-
-<br>
 
 # WARNING
 
